@@ -5,7 +5,14 @@ from cr_mkref.gtf import make_transgene_gtf
 
 
 def cmd_gtf(args):
-    make_transgene_gtf(args.yaml_path)
+    from pathlib import Path
+
+    proj = Path(args.project_dir).expanduser().resolve()
+    yaml_path = proj / "genrefdb.yaml"
+    if not yaml_path.is_file():
+        print(f"error: genrefdb.yaml not found in {proj}", file=sys.stderr)
+        sys.exit(1)
+    make_transgene_gtf(str(yaml_path))
 
 
 def cmd_init(args):
@@ -25,13 +32,13 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command")
 
     gtf_parser = sub.add_parser("gtf", help="Generate transgene GTF from a YAML locus definition")
-    gtf_parser.add_argument("yaml_path", help="Path to the genrefdb YAML file")
+    gtf_parser.add_argument("project_dir", nargs="?", default=".", help="Project directory containing genrefdb.yaml (default: .)")
 
     init_parser = sub.add_parser("init", help="Interactive wizard to create config files")
     init_parser.add_argument("--output-dir", "-o", default=".", help="Directory to write output files")
 
     create_parser = sub.add_parser("create", help="Build the Cell Ranger reference")
-    create_parser.add_argument("project_dir", help="Project directory containing cr-mkref.env.sh")
+    create_parser.add_argument("project_dir", nargs="?", default=".", help="Project directory containing cr-mkref.env.sh (default: .)")
 
     args = parser.parse_args(argv)
 

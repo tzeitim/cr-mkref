@@ -141,8 +141,6 @@ class WizardApp(App):
             yield Static("Step 3 / 3 — Transgene loci", classes="title")
             yield Label("Root directory for transgene FASTAs")
             yield Input(id="rootdir", placeholder="/path/to/transgenes/")
-            yield Label("Output transgene GTF path")
-            yield Input(id="trans-gtf", placeholder="/path/to/trans.gtf")
             yield DataTable(id="loci-table")
             with Horizontal(id="loci-buttons"):
                 yield Button("Add locus", id="btn-add")
@@ -246,7 +244,6 @@ class WizardApp(App):
 
         # --- genrefdb.yaml ---
         rootdir = os.path.expanduser(self._val("#rootdir"))
-        trans_gtf = os.path.expanduser(self._val("#trans-gtf"))
         loci_dict = {}
         for loc in self.loci:
             loci_dict[loc["name"]] = {
@@ -256,7 +253,7 @@ class WizardApp(App):
                 "end": loc["end"],
                 "strand": loc["strand"],
             }
-        yaml_data = {"rootdir": rootdir, "trans_gtf": trans_gtf, "loci": loci_dict}
+        yaml_data = {"rootdir": rootdir, "loci": loci_dict}
         yaml_path = self.output_dir / "genrefdb.yaml"
         with open(yaml_path, "w") as fh:
             yaml.dump(yaml_data, fh, default_flow_style=False, sort_keys=False)
@@ -279,9 +276,27 @@ class WizardApp(App):
         with open(env_path, "w") as fh:
             fh.write("\n".join(lines) + "\n")
 
-        self.notify(f"Wrote {yaml_path} and {env_path}")
+        self._written_yaml = yaml_path.resolve()
+        self._written_env = env_path.resolve()
 
 
 def run_wizard(output_dir: str = ".") -> None:
     app = WizardApp(output_dir=output_dir)
     app.run()
+
+    yaml_path = getattr(app, "_written_yaml", None)
+    env_path = getattr(app, "_written_env", None)
+    if not yaml_path:
+        return
+
+    out_dir = yaml_path.parent
+    print(f"\nWrote config to {out_dir}/\n")
+    print(f"  {yaml_path.name:<20s}  Transgene locus definitions")
+    print(f"  {env_path.name:<20s}  Environment variables for the build\n")
+    print("Next steps:\n")
+    print(f"  1. Review the generated files")
+    print(f"  2. Generate the transgene GTF:")
+    print(f"       uv run cr-mkref gtf {yaml_path}")
+    print(f"  3. Build the Cell Ranger reference:")
+    print(f"       uv run cr-mkref create {out_dir}/")
+    print()

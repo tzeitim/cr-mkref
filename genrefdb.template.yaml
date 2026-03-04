@@ -1,9 +1,6 @@
 # Directory containing per-chromosome transgene FASTA files (chr*.fa)
 rootdir: /path/to/transgenes/
 
-# Output path for the generated transgene GTF
-trans_gtf: /path/to/trans.gtf
-
 # Transgene locus definitions
 # Each entry produces CDS, transcript, and exon GTF records
 loci:

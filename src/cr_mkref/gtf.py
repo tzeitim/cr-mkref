@@ -7,13 +7,15 @@ def make_transgene_gtf(yaml_path: str) -> Path:
     """Generate a transgene GTF file from a YAML locus definition.
 
     The YAML must contain:
-      - trans_gtf: output path for the generated GTF
       - loci: mapping of locus names to {chrom, start, end, strand}
+
+    The GTF is written to trans.gtf in the same directory as the YAML file.
     """
-    with open(yaml_path) as fh:
+    yaml_file = Path(yaml_path).expanduser().resolve()
+    with open(yaml_file) as fh:
         sitedb = yaml.safe_load(fh)
 
-    trans_gtf_path = Path(sitedb["trans_gtf"]).expanduser()
+    trans_gtf_path = yaml_file.parent / "trans.gtf"
 
     with open(trans_gtf_path, "w") as trans_out:
         for name, locus in sitedb["loci"].items():

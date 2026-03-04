@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 720" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="720" rx="12" fill="#fafafa" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Title -->
+  <text x="440" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#1e293b">cr-mkref workflow</text>
+
+  <!-- ============================================================ -->
+  <!-- PREREQUISITES SECTION -->
+  <!-- ============================================================ -->
+  <rect x="24" y="56" width="832" height="290" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+  <text x="44" y="80" font-size="13" font-weight="700" fill="#9a3412">PREREQUISITES — prepare before running cr-mkref</text>
+
+  <!-- Cell Ranger box -->
+  <rect x="44" y="96" width="200" height="60" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="144" y="120" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">Cell Ranger installed</text>
+  <text x="144" y="138" text-anchor="middle" font-size="10" fill="#64748b">note path to binary</text>
+
+  <!-- Transgene FASTA directory -->
+  <rect x="280" y="96" width="556" height="240" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="300" y="118" font-size="12" font-weight="600" fill="#1e293b">Transgene FASTA directory</text>
+  <text x="300" y="136" font-size="10" fill="#64748b">one file per artificial chromosome, named chr*.fa</text>
+
+  <!-- File examples -->
+  <rect x="300" y="152" width="240" height="88" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="312" y="170" font-size="10" font-weight="600" fill="#475569">chrTrans.fa</text>
+  <text x="312" y="188" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#1e293b">&gt;chrTrans chrTrans</text>
+  <text x="312" y="204" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#64748b">ATCACCTCGAGTTT...</text>
+  <text x="312" y="228" font-size="9" fill="#94a3b8">|______|</text>
+  <text x="370" y="228" font-size="9" fill="#94a3b8">this is the chromosome name</text>
+
+  <rect x="560" y="152" width="240" height="88" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="572" y="170" font-size="10" font-weight="600" fill="#475569">chrCas9.fa</text>
+  <text x="572" y="188" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#1e293b">&gt;chrCas chrCas</text>
+  <text x="572" y="204" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#64748b">GAGTTTACTCCCTA...</text>
+  <text x="572" y="228" font-size="9" fill="#94a3b8">|_____|</text>
+  <text x="625" y="228" font-size="9" fill="#94a3b8">this is the chromosome name</text>
+
+  <!-- Naming rules -->
+  <rect x="300" y="252" width="516" height="72" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="316" y="272" font-size="11" font-weight="600" fill="#1e40af">Naming rules</text>
+  <text x="316" y="290" font-size="10" fill="#1e3a5f">1. Each FASTA file is referenced by name via the fa field in genrefdb.yaml</text>
+  <text x="316" y="306" font-size="10" fill="#1e3a5f">2. FASTA header first word = chromosome name = chrom field in genrefdb.yaml</text>
+
+  <!-- ============================================================ -->
+  <!-- WORKFLOW STEPS -->
+  <!-- ============================================================ -->
+
+  <!-- Step 1: init -->
+  <rect x="24" y="366" width="260" height="100" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="44" y="390" font-size="11" font-weight="700" fill="#166534">STEP 1</text>
+  <text x="44" y="410" font-size="13" font-weight="600" fill="#1e293b">cr-mkref init -o proj/</text>
+  <text x="44" y="430" font-size="10" fill="#64748b">Interactive wizard</text>
+  <text x="44" y="446" font-size="10" fill="#64748b">Writes genrefdb.yaml + cr-mkref.env.sh</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="290" y1="416" x2="323" y2="416" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: gtf -->
+  <rect x="330" y="366" width="220" height="100" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="350" y="390" font-size="11" font-weight="700" fill="#166534">STEP 2</text>
+  <text x="350" y="410" font-size="13" font-weight="600" fill="#1e293b">cr-mkref gtf proj/</text>
+  <text x="350" y="430" font-size="10" fill="#64748b">Generates transgene GTF</text>
+  <text x="350" y="446" font-size="10" fill="#64748b">Writes proj/trans.gtf</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="556" y1="416" x2="589" y2="416" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: create -->
+  <rect x="596" y="366" width="260" height="100" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="616" y="390" font-size="11" font-weight="700" fill="#166534">STEP 3</text>
+  <text x="616" y="410" font-size="13" font-weight="600" fill="#1e293b">cr-mkref create proj/</text>
+  <text x="616" y="430" font-size="10" fill="#64748b">Downloads mm10, filters GTF,</text>
+  <text x="616" y="446" font-size="10" fill="#64748b">appends transgenes, runs cellranger mkref</text>
+
+  <!-- ============================================================ -->
+  <!-- PROJECT DIRECTORY LAYOUT -->
+  <!-- ============================================================ -->
+  <rect x="24" y="490" width="832" height="216" rx="8" fill="#faf5ff" stroke="#d8b4fe" stroke-width="1.5"/>
+  <text x="44" y="516" font-size="13" font-weight="700" fill="#6b21a8">Project directory after each step</text>
+
+  <!-- After init -->
+  <rect x="44" y="530" width="230" height="164" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="60" y="550" font-size="11" font-weight="600" fill="#1e293b">After init</text>
+  <text x="60" y="572" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">proj/</text>
+  <text x="60" y="590" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">  genrefdb.yaml</text>
+  <text x="60" y="608" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">  cr-mkref.env.sh</text>
+
+  <!-- After gtf -->
+  <rect x="310" y="530" width="230" height="164" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="326" y="550" font-size="11" font-weight="600" fill="#1e293b">After gtf</text>
+  <text x="326" y="572" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">proj/</text>
+  <text x="326" y="590" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">  genrefdb.yaml</text>
+  <text x="326" y="608" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">  cr-mkref.env.sh</text>
+  <text x="326" y="626" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#16a34a">  trans.gtf</text>
+
+  <!-- After create -->
+  <rect x="576" y="530" width="260" height="164" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="592" y="550" font-size="11" font-weight="600" fill="#1e293b">After create</text>
+  <text x="592" y="572" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">$REF_DIR/</text>
+  <text x="592" y="590" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">  reference_sources/</text>
+  <text x="592" y="608" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#475569">  $BUILD/</text>
+  <text x="592" y="626" font-size="11" font-family="'SF Mono', 'Fira Code', monospace" fill="#16a34a">  $GENOME_NAME/</text>
+  <text x="592" y="644" font-size="9" fill="#64748b">    (Cell Ranger reference)</text>
+
+  <!-- Arrows between layouts -->
+  <line x1="278" y1="612" x2="304" y2="612" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="544" y1="612" x2="570" y2="612" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+</svg>
