@@ -1,0 +1,20 @@
+[project]
+name = "cr-mkref"
+version = "0.1.0"
+description = "Cell Ranger custom reference builder utilities"
+readme = "README.md"
+authors = [
+    { name = "tzeitim", email = "pedroy.final@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pyyaml>=6.0.3",
+    "textual>=8.0.2",
+]
+
+[project.scripts]
+cr-mkref = "cr_mkref.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
