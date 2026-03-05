@@ -69,6 +69,8 @@ transgenes/
 
 ## Quick start
 
+It is recommended to run the wizard to generate all the needed files for a project (reference) and then fine-tune any settings. 
+
 ```bash
 cd ~/src/cr-mkref
 
